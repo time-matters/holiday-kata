@@ -1,0 +1,213 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "DateApi for Applicant Kata",
+        "version": "v1.0"
+    },
+    "paths": {
+        "/Api/v2/PublicHolidays/{year}/{countrycode}": {
+            "get": {
+                "tags": [
+                    "Api"
+                ],
+                "parameters": [
+                    {
+                        "name": "year",
+                        "description": "",
+                        "schema": {
+                            "format": "int32",
+                            "description": "",
+                            "type": "integer"
+                        },
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "countrycode",
+                        "description": "",
+                        "schema": {
+                            "description": "",
+                            "type": "string"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get Public Holiday"
+            }
+        },
+        "/Api/v2/AvailableCountries": {
+            "get": {
+                "tags": [
+                    "Api"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get all available countries"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "PublicHolidayType": {
+                "description": "Contains the type (if existing) of the Holiday",
+                "enum": [
+                    "Public",
+                    "Bank",
+                    "School",
+                    "Authorities",
+                    "Optional",
+                    "Observance"
+                ],
+                "type": "string"
+            },
+            "PublicHolidayDto": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "format": "date",
+                        "description": "The date",
+                        "type": "string"
+                    },
+                    "localName": {
+                        "nullable": true,
+                        "description": "Local name",
+                        "type": "string"
+                    },
+                    "name": {
+                        "nullable": true,
+                        "description": "English name",
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "nullable": true,
+                        "description": "ISO 3166-1 alpha-2",
+                        "type": "string"
+                    },
+                    "fixed": {
+                        "description": "Is this public holiday every year on the same date",
+                        "type": "boolean"
+                    },
+                    "global": {
+                        "description": "Is this public holiday in every county (federal state)",
+                        "type": "boolean"
+                    },
+                    "counties": {
+                        "nullable": true,
+                        "description": "ISO-3166-2 - Federal states",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "launchYear": {
+                        "nullable": true,
+                        "format": "int32",
+                        "description": "The launch year of the public holiday",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/PublicHolidayType"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "CountryInfoDto": {
+                "type": "object",
+                "properties": {
+                    "commonName": {
+                        "nullable": true,
+                        "type": "string"
+                    },
+                    "officialName": {
+                        "nullable": true,
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "nullable": true,
+                        "type": "string"
+                    },
+                    "alternativeSpellings": {
+                        "nullable": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "region": {
+                        "nullable": true,
+                        "type": "string"
+                    },
+                    "borders": {
+                        "nullable": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CountryInfoDto"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}
