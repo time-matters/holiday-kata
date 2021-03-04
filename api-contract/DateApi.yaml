@@ -9,7 +9,10 @@ paths:
       tags:
       - Api
       parameters:
-      - name: year
+      - examples:
+          Year:
+            value: "2023"
+        name: year
         description: ""
         schema:
           format: int32
@@ -17,8 +20,11 @@ paths:
           type: integer
         in: path
         required: true
-      - name: countrycode
-        description: ""
+      - examples:
+          CountryCode:
+            value: JM
+        name: countrycode
+        description: ISO 3166 Alpha 2 Countrycode. (2 Letters)
         schema:
           description: ""
           type: string
@@ -27,47 +33,40 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PublicHolidayDto'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PublicHolidayDto'
             text/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/PublicHolidayDto'
+              examples:
+                Example Response for 2021:
+                  value:
+                  - date: 2021-03-08
+                    localName: Internationaler Frauentag
+                    name: International Women's Day
+                    countryCode: DE
+                    fixed: true
+                    global: false
+                    counties:
+                    - DE-BE
+                    launchYear: 2019
+                    type: Public
+                  - date: 2021-06-03
+                    localName: Fronleichnam
+                    name: Corpus Christi
+                    countryCode: DE
+                    fixed: false
+                    global: false
+                    counties:
+                    - DE-BW
+                    - DE-BY
+                    - DE-HE
+                    - DE-NW
+                    - DE-RP
+                    - DE-SL
+                    type: Public
           description: Success
       summary: Get Public Holiday
-  /Api/v2/AvailableCountries:
-    get:
-      tags:
-      - Api
-      responses:
-        "200":
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PublicHolidayDto'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PublicHolidayDto'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PublicHolidayDto'
-          description: Success
-      summary: Get all available countries
 components:
   schemas:
     PublicHolidayType:
@@ -80,6 +79,7 @@ components:
       - Optional
       - Observance
       type: string
+      example: '"Optional"'
     PublicHolidayDto:
       type: object
       properties:
@@ -107,7 +107,8 @@ components:
           type: boolean
         counties:
           nullable: true
-          description: ISO-3166-2 - Federal states
+          description: ISO-3166-2 - Federal states - Used if the holiday applies only
+            to specific federal states.
           type: array
           items:
             type: string
@@ -119,6 +120,17 @@ components:
         type:
           $ref: '#/components/schemas/PublicHolidayType'
       additionalProperties: false
+      example:
+        date: 2021-03-08
+        localName: Internationaler Frauentag
+        name: International Women's Day
+        countryCode: DE
+        fixed: true
+        global: false
+        counties:
+        - DE-BE
+        launchYear: 2019
+        type: Public
     CountryInfoDto:
       type: object
       properties:
@@ -131,17 +143,10 @@ components:
         countryCode:
           nullable: true
           type: string
-        alternativeSpellings:
-          nullable: true
-          type: array
-          items:
-            type: string
         region:
           nullable: true
           type: string
-        borders:
-          nullable: true
-          type: array
-          items:
-            $ref: '#/components/schemas/CountryInfoDto'
       additionalProperties: false
+      example: "{\n    \"commonName\": \"United States\",\n    \"officialName\": \"\
+        United States of America\",\n    \"countryCode\": \"US\",\n    \"region\"\
+        : \"Americas\",\n}"

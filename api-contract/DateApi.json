@@ -12,6 +12,11 @@
                 ],
                 "parameters": [
                     {
+                        "examples": {
+                            "Year": {
+                                "value": "2023"
+                            }
+                        },
                         "name": "year",
                         "description": "",
                         "schema": {
@@ -23,8 +28,13 @@
                         "required": true
                     },
                     {
+                        "examples": {
+                            "CountryCode": {
+                                "value": "JM"
+                            }
+                        },
                         "name": "countrycode",
-                        "description": "",
+                        "description": "ISO 3166 Alpha 2 Countrycode. (2 Letters)",
                         "schema": {
                             "description": "",
                             "type": "string"
@@ -36,27 +46,47 @@
                 "responses": {
                     "200": {
                         "content": {
-                            "text/plain": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PublicHolidayDto"
-                                    }
-                                }
-                            },
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PublicHolidayDto"
-                                    }
-                                }
-                            },
                             "text/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/PublicHolidayDto"
+                                    }
+                                },
+                                "examples": {
+                                    "Example Response for 2021": {
+                                        "value": [
+                                            {
+                                                "date": "2021-03-08",
+                                                "localName": "Internationaler Frauentag",
+                                                "name": "International Women's Day",
+                                                "countryCode": "DE",
+                                                "fixed": true,
+                                                "global": false,
+                                                "counties": [
+                                                    "DE-BE"
+                                                ],
+                                                "launchYear": 2019,
+                                                "type": "Public"
+                                            },
+                                            {
+                                                "date": "2021-06-03",
+                                                "localName": "Fronleichnam",
+                                                "name": "Corpus Christi",
+                                                "countryCode": "DE",
+                                                "fixed": false,
+                                                "global": false,
+                                                "counties": [
+                                                    "DE-BW",
+                                                    "DE-BY",
+                                                    "DE-HE",
+                                                    "DE-NW",
+                                                    "DE-RP",
+                                                    "DE-SL"
+                                                ],
+                                                "type": "Public"
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -65,45 +95,6 @@
                     }
                 },
                 "summary": "Get Public Holiday"
-            }
-        },
-        "/Api/v2/AvailableCountries": {
-            "get": {
-                "tags": [
-                    "Api"
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "text/plain": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PublicHolidayDto"
-                                    }
-                                }
-                            },
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PublicHolidayDto"
-                                    }
-                                }
-                            },
-                            "text/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PublicHolidayDto"
-                                    }
-                                }
-                            }
-                        },
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get all available countries"
             }
         }
     },
@@ -119,7 +110,8 @@
                     "Optional",
                     "Observance"
                 ],
-                "type": "string"
+                "type": "string",
+                "example": "\"Optional\""
             },
             "PublicHolidayDto": {
                 "type": "object",
@@ -154,7 +146,7 @@
                     },
                     "counties": {
                         "nullable": true,
-                        "description": "ISO-3166-2 - Federal states",
+                        "description": "ISO-3166-2 - Federal states - Used if the holiday applies only to specific federal states.",
                         "type": "array",
                         "items": {
                             "type": "string"
@@ -170,7 +162,20 @@
                         "$ref": "#/components/schemas/PublicHolidayType"
                     }
                 },
-                "additionalProperties": false
+                "additionalProperties": false,
+                "example": {
+                    "date": "2021-03-08",
+                    "localName": "Internationaler Frauentag",
+                    "name": "International Women's Day",
+                    "countryCode": "DE",
+                    "fixed": true,
+                    "global": false,
+                    "counties": [
+                        "DE-BE"
+                    ],
+                    "launchYear": 2019,
+                    "type": "Public"
+                }
             },
             "CountryInfoDto": {
                 "type": "object",
@@ -187,26 +192,13 @@
                         "nullable": true,
                         "type": "string"
                     },
-                    "alternativeSpellings": {
-                        "nullable": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "region": {
                         "nullable": true,
                         "type": "string"
-                    },
-                    "borders": {
-                        "nullable": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/CountryInfoDto"
-                        }
                     }
                 },
-                "additionalProperties": false
+                "additionalProperties": false,
+                "example": "{\n    \"commonName\": \"United States\",\n    \"officialName\": \"United States of America\",\n    \"countryCode\": \"US\",\n    \"region\": \"Americas\",\n}"
             }
         }
     }
