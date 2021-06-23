@@ -3,8 +3,10 @@ openapi: 3.0.1
 info:
   title: DateApi for Applicant Kata
   version: v1.0
+servers:
+  - url:  http://localhost:8080/Api/v2
 paths:
-  /Api/v2/PublicHolidays/{year}/{countrycode}:
+  /PublicHolidays/{year}/{countrycode}:
     get:
       tags:
       - Api
