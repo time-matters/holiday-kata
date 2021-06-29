@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface PublicHolidaysRepository extends JpaRepository<PublicHoliday, Long> {
 
-    List<PublicHoliday> findByLaunchYearAndCountryCode(@Param("lunchYear") Integer lunchYear,
-                                                                 @Param("countryCode") String countryCode);
+    List<PublicHoliday> findByLaunchYearAndCountryCode(Integer lunchYear, String countryCode);
 
 }
