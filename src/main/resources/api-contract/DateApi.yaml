@@ -3,35 +3,33 @@ openapi: 3.0.1
 info:
   title: DateApi for Applicant Kata
   version: v1.0
-servers:
-  - url:  http://localhost:8080/Api/v2
 paths:
-  /PublicHolidays/{year}/{countrycode}:
+  /Api/v2/PublicHolidays/{year}/{countrycode}:
     get:
       tags:
-      - Api
+        - PublicHolidays
       parameters:
-      - examples:
-          Year:
-            value: "2023"
-        name: year
-        description: ""
-        schema:
-          format: int32
+        - examples:
+            Year:
+              value: "2023"
+          name: year
           description: ""
-          type: integer
-        in: path
-        required: true
-      - examples:
-          CountryCode:
-            value: JM
-        name: countrycode
-        description: ISO 3166 Alpha 2 Countrycode. (2 Letters)
-        schema:
-          description: ""
-          type: string
-        in: path
-        required: true
+          schema:
+            format: int32
+            description: ""
+            type: integer
+          in: path
+          required: true
+        - examples:
+            CountryCode:
+              value: JM
+          name: countrycode
+          description: ISO 3166 Alpha 2 Countrycode. (2 Letters)
+          schema:
+            description: ""
+            type: string
+          in: path
+          required: true
       responses:
         "200":
           content:
@@ -43,30 +41,30 @@ paths:
               examples:
                 Example Response for 2021:
                   value:
-                  - date: 2021-03-08
-                    localName: Internationaler Frauentag
-                    name: International Women's Day
-                    countryCode: DE
-                    fixed: true
-                    global: false
-                    counties:
-                    - DE-BE
-                    launchYear: 2019
-                    type: Public
-                  - date: 2021-06-03
-                    localName: Fronleichnam
-                    name: Corpus Christi
-                    countryCode: DE
-                    fixed: false
-                    global: false
-                    counties:
-                    - DE-BW
-                    - DE-BY
-                    - DE-HE
-                    - DE-NW
-                    - DE-RP
-                    - DE-SL
-                    type: Public
+                    - date: 2021-03-08
+                      localName: Internationaler Frauentag
+                      name: International Women's Day
+                      countryCode: DE
+                      fixed: true
+                      global: false
+                      counties:
+                        - DE-BE
+                      launchYear: 2019
+                      type: Public
+                    - date: 2021-06-03
+                      localName: Fronleichnam
+                      name: Corpus Christi
+                      countryCode: DE
+                      fixed: false
+                      global: false
+                      counties:
+                        - DE-BW
+                        - DE-BY
+                        - DE-HE
+                        - DE-NW
+                        - DE-RP
+                        - DE-SL
+                      type: Public
           description: Success
       summary: Get Public Holiday
 components:
@@ -74,12 +72,12 @@ components:
     PublicHolidayType:
       description: Contains the type (if existing) of the Holiday
       enum:
-      - Public
-      - Bank
-      - School
-      - Authorities
-      - Optional
-      - Observance
+        - Public
+        - Bank
+        - School
+        - Authorities
+        - Optional
+        - Observance
       type: string
       example: '"Optional"'
     PublicHolidayDto:
@@ -130,7 +128,7 @@ components:
         fixed: true
         global: false
         counties:
-        - DE-BE
+          - DE-BE
         launchYear: 2019
         type: Public
     CountryInfoDto:
