@@ -1,19 +1,20 @@
 package com.timematters.holidaykata.model;
 
 import com.timematters.holidaykata.dto.PublicHolidayType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PublicHoliday {
 
     @Id
@@ -53,6 +54,7 @@ public class PublicHoliday {
     /**
      * ISO-3166-2 - Federal states - Used if the holiday applies only to specific federal states.
      **/
+    @ElementCollection
     private List<String> counties = null;
 
     /**
