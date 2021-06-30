@@ -16,6 +16,6 @@ public class PublicHolidaysServiceImpl implements PublicHolidaysService {
     @Override
     public List<PublicHoliday> getPublicHolidays(Integer year, String countrycode) {
 
-        return publicHolidaysRepository.findByLaunchYearAndCountryCode(year, countrycode);
+        return publicHolidaysRepository.findByYearAndCountryCode(year.toString(), countrycode);
     }
 }
