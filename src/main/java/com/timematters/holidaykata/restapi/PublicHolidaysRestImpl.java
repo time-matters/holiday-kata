@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +29,13 @@ public class PublicHolidaysRestImpl implements PublicHolidaysApi {
     @Override
     public List<PublicHolidayDto> getPublicHolidays(Integer year, String countrycode) {
 
+        String yearStr = (year == null) ? null : year.toString();
         logger.info("Received a request to retrieve public holiday List");
-        List<PublicHoliday> runList = publicHolidaysService.getPublicHolidays(year, countrycode);
+        List<PublicHoliday> runList = publicHolidaysService.getPublicHolidays(yearStr, countrycode);
+        if (runList.isEmpty()) {
+            logger.info("No holidays found in the country with the country code {} : in year : {}", countrycode, year);
+            throw new NotFoundException("No holidays found");
+        }
         return runList.stream().map(publicHolidaysMapper::toDto).collect(Collectors.toList());
     }
 }

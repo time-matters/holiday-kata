@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface PublicHolidaysService {
 
-    List<PublicHoliday> getPublicHolidays(Integer year, String countrycode);
+    List<PublicHoliday> getPublicHolidays(String year, String countryCode);
 
 }
