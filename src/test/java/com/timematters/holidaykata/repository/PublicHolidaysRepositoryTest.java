@@ -88,4 +88,11 @@ class PublicHolidaysRepositoryTest {
         assertEquals(0, holidayList.size());
     }
 
+    @Test
+    void testFindByYearAndCountryCodeNullYearNullCountryCodeReturnEmptyResults() {
+        List<PublicHoliday> holidayList = publicHolidaysRepository.findByYearAndCountryCode(null, null);
+        assertNotNull(holidayList);
+        assertEquals(0, holidayList.size());
+    }
+
 }
