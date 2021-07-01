@@ -54,7 +54,8 @@ public class PublicHoliday {
     /**
      * ISO-3166-2 - Federal states - Used if the holiday applies only to specific federal states.
      **/
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
+    @Column(name ="counties")
     private List<String> counties = null;
 
     /**
