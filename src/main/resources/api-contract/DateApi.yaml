@@ -3,8 +3,10 @@ openapi: 3.0.1
 info:
   title: DateApi for Applicant Kata
   version: v1.0
+servers:
+  - url: http://localhost:8080/Api/v2
 paths:
-  /Api/v2/PublicHolidays/{year}/{countrycode}:
+  /PublicHolidays/{year}/{countrycode}:
     get:
       tags:
         - PublicHolidays
@@ -68,6 +70,43 @@ paths:
                       type: Public
           description: Success
       summary: Get Public Holiday
+  /DateDiff:
+    get:
+      tags:
+        - DateDiff
+      description: Find the difference between those two dates in hours
+      operationId: calDateDiff
+      parameters:
+        - in: query
+          name: date1
+          description: The first Date
+          required: true
+          schema:
+            type: string
+            format: regex
+            pattern: ^(\d{4})-(\d{2})-(\d{2})(T(\d{2}):(\d{2}):(\d{2}))?(([\+-])((\d{2}):(\d{2})))?$
+            example: 2001-10-26T21:32:52+02:00
+        - in: query
+          name: date2
+          description: The second Date
+          required: true
+          schema:
+            type: string
+            format: regex
+            pattern: ^(\d{4})-(\d{2})-(\d{2})(T(\d{2}):(\d{2}):(\d{2}))?(([\+-])((\d{2}):(\d{2})))?$
+            example: 2001-10-26T21:32:52+02:00
+      responses:
+        "200":
+          description: Date difference returned Successfully
+          content:
+            text/json:
+              schema:
+                type: integer
+                example: 5
+        "400":
+          description: Invalid Input
+        "500":
+          description: Internal Server Error
 components:
   schemas:
     PublicHolidayType:
