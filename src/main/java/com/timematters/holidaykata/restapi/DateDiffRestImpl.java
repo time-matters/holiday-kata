@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.time.Duration;
-import java.time.OffsetDateTime;
+import java.time.*;
 
 @Features(features = { "org.apache.cxf.jaxrs.validation.JAXRSBeanValidationFeature",
         "org.apache.cxf.ext.logging.LoggingFeature" })
@@ -23,11 +22,22 @@ public class DateDiffRestImpl implements DateDiffApi {
 
         logger.info("Received a request to calculate date time difference");
 
-        OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(date1);
-        OffsetDateTime offsetDateTime2 = OffsetDateTime.parse(date2);
+        OffsetDateTime offsetDateTime1 = convertDateStringToOffsetDateTime(date1);
+        OffsetDateTime offsetDateTime2 = convertDateStringToOffsetDateTime(date2);
 
         Duration duration = Duration.between(offsetDateTime1, offsetDateTime2);
         int diffHours = new Long (duration.toHours()).intValue();
         return new Integer(diffHours);
+    }
+
+    private OffsetDateTime convertDateStringToOffsetDateTime (String date) {
+        switch (date.length()) {
+            case 10:
+                date += "T00:00:00";
+            case 19:
+                return OffsetDateTime.of(LocalDateTime.parse(date), ZoneOffset.UTC);
+            default:
+                return OffsetDateTime.parse(date);
+        }
     }
 }
